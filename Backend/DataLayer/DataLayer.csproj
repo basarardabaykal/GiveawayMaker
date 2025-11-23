@@ -10,4 +10,8 @@
       <Folder Include="Migrations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CoreLayer\CoreLayer.csproj" />
+    </ItemGroup>
+
 </Project>

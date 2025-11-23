@@ -16,4 +16,9 @@
       <Folder Include="Validations\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CoreLayer\CoreLayer.csproj" />
+      <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
+    </ItemGroup>
+
 </Project>

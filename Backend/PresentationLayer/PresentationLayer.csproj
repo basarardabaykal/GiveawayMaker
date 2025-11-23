@@ -11,4 +11,9 @@
       <Folder Include="Middlewares\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+      <ProjectReference Include="..\CoreLayer\CoreLayer.csproj" />
+    </ItemGroup>
+
 </Project>
