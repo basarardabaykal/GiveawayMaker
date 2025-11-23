@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "PresentationLayer\PresentationLayer.csproj", "{1D336475-3E41-4F2A-B653-73E9B7B2EBB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLayer", "Backend\PresentationLayer\PresentationLayer.csproj", "{1D336475-3E41-4F2A-B653-73E9B7B2EBB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{C2182D10-EC3E-4BFE-A4E1-ECCDA23C1857}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "Backend\DataLayer\DataLayer.csproj", "{C2182D10-EC3E-4BFE-A4E1-ECCDA23C1857}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{CDF5B421-7878-468F-B0E4-4859DD313FF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "Backend\BusinessLayer\BusinessLayer.csproj", "{CDF5B421-7878-468F-B0E4-4859DD313FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLayer", "CoreLayer\CoreLayer.csproj", "{97033AF7-32BD-4C8A-B3EB-7DB4BDE9BC8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLayer", "Backend\CoreLayer\CoreLayer.csproj", "{97033AF7-32BD-4C8A-B3EB-7DB4BDE9BC8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
