@@ -1,8 +1,7 @@
 namespace CoreLayer.Entities;
 
-public class Participator
+public class Participator : IBaseEntity
 {
-    public Guid Id { get; set; }
     public string FullName { get; set; }
     public string PhoneNumber { get; set; }
     public string FingerPrintId { get; set; }
@@ -10,8 +9,6 @@ public class Participator
     public string AuthProvider { get; set; }
     public string ProviderUserId { get; set; }
     public bool IsWinner { get; set; }
-    public DateTime CreatedAt { get; set; }
-    
     public Guid GiveAwayId { get; set; } // Foreign Key referencing Giveaway relation
     public Giveaway GiveAway { get; set; } // Foreign Reference
 }
