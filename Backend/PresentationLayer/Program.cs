@@ -8,15 +8,20 @@ using BusinessLayer.Profiles;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using Microsoft.OpenApi.Models;
+
+// Env
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// Env
-DotNetEnv.Env.Load();
+// Swagger setup
+builder.Services.AddSwaggerGen(o =>
+    o.SwaggerDoc("v1", new OpenApiInfo { Title = "GiveawayMaker API", Version = "v1" })
+);
 
 // Db Context
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -34,11 +39,9 @@ var app = builder.Build();
 // global exception handler middleware
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-	app.UseSwagger();
-	app.UseSwaggerUI();
-}
+// Run swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
