@@ -32,6 +32,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// CORS
+var frontendUrl = builder.Configuration["FRONTEND_URL"];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend",
+        policy => policy.WithOrigins(frontendUrl)
+                         .AllowAnyHeader()
+                         .AllowAnyMethod()
+                         .AllowCredentials());
+});
+
 // Dependency Injection
 builder.Services.AddScoped(typeof(IGiveawayRepository), typeof(GiveawayRepository));
 builder.Services.AddScoped(typeof(IGiveawayService), typeof(GiveawayService));
@@ -42,6 +53,9 @@ var app = builder.Build();
 
 // global exception handler middleware
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
+// CORS
+app.UseCors("Frontend");
 
 // Run swagger
 app.UseSwagger();
