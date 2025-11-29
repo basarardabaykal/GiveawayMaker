@@ -34,7 +34,7 @@ namespace BusinessLayer.Repositories.Concretes
         public async Task<List<Participator>> GetAllParticipants(Guid giveawayId)
         {
             return await _dbContext.Participators
-                .Where(p => p.GiveAwayId == giveawayId)
+                .Where(p => p.GiveawayId == giveawayId)
                 .ToListAsync();
         }
 

@@ -13,6 +13,6 @@ namespace BusinessLayer.Dtos
         public string IpAddress { get; set; }
         public string AuthProvider { get; set; }
         public string ProviderUserId { get; set; }
-        public Guid GiveAwayId { get; set; }
+        public Guid GiveawayId { get; set; }
     }
 }

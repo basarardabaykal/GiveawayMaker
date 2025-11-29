@@ -24,8 +24,8 @@ public class AppDbContext : DbContext
             entity.Property(g => g.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasMany<Participator>()
-                .WithOne(p => p.GiveAway)
-                .HasForeignKey(p => p.GiveAwayId)
+                .WithOne(p => p.Giveaway)
+                .HasForeignKey(p => p.GiveawayId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
