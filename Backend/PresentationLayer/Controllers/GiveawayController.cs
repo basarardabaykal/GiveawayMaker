@@ -21,4 +21,11 @@ public class GiveawayController : Controller
     var result = await _giveawayService.CreateGiveaway(requestDto);
     return StatusCode(result.StatusCode, result);
   }
+
+  [HttpPatch]
+  public async Task<IActionResult> EndGiveaway([FromBody] EndGiveawayRequestDto requestDto)
+  {
+    var result = await _giveawayService.EndGiveaway(requestDto);
+    return StatusCode(result.StatusCode, result);
+  }
 }

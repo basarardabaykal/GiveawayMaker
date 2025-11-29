@@ -43,5 +43,44 @@ namespace BusinessLayer.Services.Concretes
 
             return new SuccessDataResult<CreateGiveawayResponseDto>("Giveaway created successfully.", response);
         }
+
+        public async Task<IDataResult<EndGiveawayResponseDto>> EndGiveaway(EndGiveawayRequestDto requestDto)
+        {
+            var giveaway = await _giveawayRepository.GetGiveawayById(requestDto.GiveawayId);
+            if (giveaway == null) 
+            {
+                return new ErrorDataResult<EndGiveawayResponseDto>(404, "Giveaway not found.");
+            }
+
+            var participants = await _giveawayRepository.GetAllParticipants(requestDto.GiveawayId);
+            if (participants == null || participants.Count < (giveaway.NumberOfWinners + giveaway.NumberOfSubstitutes))
+            {
+                return new ErrorDataResult<EndGiveawayResponseDto>(404, "Not enough participants found for this giveaway.");
+            }
+
+            // Randomly select winners and substitutes
+            var rng = new Random();
+            var shuffled = participants.OrderBy(_ => rng.Next()).ToList();
+            var winnerCount = giveaway.NumberOfWinners;
+            var substituteCount = giveaway.NumberOfSubstitutes;
+            var selectedWinners = shuffled.Take(winnerCount).ToList();
+            var selectedSubstitutes = shuffled.Skip(winnerCount).Take(substituteCount).ToList();
+
+            var saved = await _giveawayRepository.UpdateGiveawayResults(giveaway, selectedWinners, selectedSubstitutes);
+            if (!saved)
+            {
+                return new ErrorDataResult<EndGiveawayResponseDto>(500, "Failed to save giveaway results.");
+            }
+
+            await _giveawayRepository.DeactivateGiveaway(requestDto.GiveawayId);
+
+            var response = new EndGiveawayResponseDto
+            {
+                Winners = selectedWinners.Select(p => p.FullName).ToArray(),
+                Substitutes = selectedSubstitutes.Select(p => p.FullName).ToArray()
+            };
+
+            return new SuccessDataResult<EndGiveawayResponseDto>("Giveaway ended successfully.", response);
+        }
     }
 }
