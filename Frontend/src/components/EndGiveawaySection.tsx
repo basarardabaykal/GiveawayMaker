@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import QRCode from 'react-qr-code';
 import { giveawayService } from '../services/giveawayService';
 
 export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayId: string; participationUrl: string }) {
@@ -28,7 +29,19 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
     <section className="border p-4 rounded space-y-2">
       <h2 className="font-medium">Giveaway Created</h2>
       <p className="text-sm">ID: <span className="font-mono">{giveawayId}</span></p>
-      <p className="text-sm break-all">URL: <a href={participationUrl} className="text-blue-700" target="_blank" rel="noreferrer">{participationUrl}</a></p>
+      <div className="space-y-2">
+        <p className="text-sm">Scan to participate:</p>
+        <a
+          href={participationUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open participation link"
+          className="inline-block bg-white p-3 rounded shadow cursor-pointer hover:shadow-md transition"
+        >
+          <QRCode value={participationUrl} size={160} />
+        </a>
+        <p className="text-xs break-all">{participationUrl}</p>
+      </div>
       <button
         onClick={onEnd}
         disabled={endLoading}
