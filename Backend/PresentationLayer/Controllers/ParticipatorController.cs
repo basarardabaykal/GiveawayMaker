@@ -15,7 +15,7 @@ public class ParticipatorController : Controller
     _participatorService = participatorService;
   }
 
-  [HttpPost]
+  [HttpPost("join-giveaway")]
   public async Task<IActionResult> JoinGiveaway([FromBody] JoinGiveawayRequestDto requestDto)
   {
     var result = await _participatorService.JoinGiveaway(requestDto);

@@ -15,14 +15,14 @@ public class GiveawayController : Controller
     _giveawayService = giveawayService;
   }
 
-  [HttpPost]
+  [HttpPost("create-giveaway")]
   public async Task<IActionResult> CreateGiveaway([FromBody] CreateGiveawayRequestDto requestDto)
   {
     var result = await _giveawayService.CreateGiveaway(requestDto);
     return StatusCode(result.StatusCode, result);
   }
 
-  [HttpPatch]
+  [HttpPatch("end-giveaway")]
   public async Task<IActionResult> EndGiveaway([FromBody] EndGiveawayRequestDto requestDto)
   {
     var result = await _giveawayService.EndGiveaway(requestDto);
