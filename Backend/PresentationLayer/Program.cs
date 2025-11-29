@@ -5,6 +5,8 @@ using BusinessLayer.Repositories.Concretes;
 using BusinessLayer.Services.Interfaces;
 using BusinessLayer.Services.Concretes;
 using BusinessLayer.Profiles;
+using BusinessLayer.Repositories.Interfaces;
+using BusinessLayer.Repositories.Concretes;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
@@ -33,6 +35,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Dependency Injection
 builder.Services.AddScoped(typeof(IGiveawayRepository), typeof(GiveawayRepository));
 builder.Services.AddScoped(typeof(IGiveawayService), typeof(GiveawayService));
+builder.Services.AddScoped(typeof(IParticipatorRepository), typeof(ParticipatorRepository));
+builder.Services.AddScoped(typeof(IParticipatorService), typeof(ParticipatorService));
 
 var app = builder.Build();
 
