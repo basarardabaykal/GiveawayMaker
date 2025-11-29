@@ -11,6 +11,7 @@ export function CreateGiveawayForm({ onCreated }: { onCreated: (info: { giveaway
   const [form, setForm] = useState<FormState>({ content: '', numberOfWinners: 1, numberOfSubstitutes: 0 });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [messageText, setMessageText] = useState<string | null>(null);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm(prev => ({ ...prev, [key]: value }));
@@ -20,30 +21,20 @@ export function CreateGiveawayForm({ onCreated }: { onCreated: (info: { giveaway
     e.preventDefault();
     setLoading(true);
     setError(null);
-    try {
-      const response = await giveawayService.createGiveaway(form.content, form.numberOfWinners, form.numberOfSubstitutes);
-      if (!response) {
-        setError('Request failed');
-      } else {
-        const d = response.data ?? {};
-        const success = d.Success ?? d.success;
-        const message = d.Message ?? d.message;
-        const data = d.Data ?? d.data;
-        if (!success) {
-          setError(message || 'Creation failed');
-        } else if (!data) {
-          setError('Empty response data');
-        } else {
-          const giveawayId = data.GiveawayId ?? data.giveawayId;
-          const participationUrl = data.ParticipationURL ?? data.participationURL;
-          onCreated({ giveawayId, participationUrl });
-        }
-      }
-    } catch {
-      setError('Unexpected error');
-    } finally {
-      setLoading(false);
+    setMessageText(null);
+    const result = await giveawayService.createGiveaway(form.content, form.numberOfWinners, form.numberOfSubstitutes);
+    if (!result.success) {
+      setError(result.message || 'Creation failed');
+    } else if (!result.data) {
+      setError('Empty response data');
+    } else {
+      if (result.message) setMessageText(result.message);
+      const data: any = result.data;
+      const giveawayId = data.GiveawayId ?? data.giveawayId;
+      const participationUrl = data.ParticipationURL ?? data.participationURL;
+      onCreated({ giveawayId, participationUrl });
     }
+    setLoading(false);
   }
 
   return (
@@ -91,6 +82,7 @@ export function CreateGiveawayForm({ onCreated }: { onCreated: (info: { giveaway
         {loading ? 'Creating...' : 'Create Giveaway'}
       </button>
       {error && <p className="text-red-600 text-sm">{error}</p>}
+      {messageText && !error && <p className="text-green-700 text-sm">{messageText}</p>}
     </form>
   );
 }
