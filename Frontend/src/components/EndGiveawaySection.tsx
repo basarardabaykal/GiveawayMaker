@@ -26,61 +26,78 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
   }
 
   return (
-    <section className="space-y-4">
-        <div className="bg-gray-50 border rounded p-4">
-          <h2 className="font-semibold text-lg">Giveaway Ready</h2>
-          <p className="text-sm mt-1">ID: <span className="font-mono">{giveawayId}</span></p>
+    <section className="space-y-5">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h2 className="font-semibold text-base text-gray-900 mb-1">✓ Giveaway Ready</h2>
+          <p className="text-sm text-gray-600">ID: <span className="font-mono font-semibold">{giveawayId}</span></p>
         </div>
-        <div className="bg-white border rounded p-6">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
           <div className="flex flex-col items-center gap-4">
-            <p className="text-base">Scan or tap to participate</p>
+            <div className="text-center">
+              <h3 className="font-semibold text-base text-gray-900 mb-1">Share with Participants</h3>
+              <p className="text-sm text-gray-600">Scan QR code or share the link below</p>
+            </div>
             <a
               href={participationUrl}
               target="_blank"
               rel="noreferrer"
               aria-label="Open participation link"
-              className="inline-block bg-white p-4 rounded shadow cursor-pointer hover:shadow-md transition"
+              className="inline-block bg-white p-4 rounded-lg border border-gray-200 cursor-pointer hover:border-gray-300 transition-colors"
             >
               <div className="w-full flex justify-center">
                 <QRCode
                   value={participationUrl}
-                  size={512}
-                  className="w-[70vw] max-w-[540px] md:w-[60vh] h-auto"
+                  size={200}
+                  className="w-48 h-48"
                 />
               </div>
             </a>
-            <p className="text-xs break-all text-gray-600">{participationUrl}</p>
+            <div className="w-full bg-white rounded p-2.5 border border-gray-200">
+              <p className="text-xs break-all text-gray-700 font-mono">{participationUrl}</p>
+            </div>
           </div>
         </div>
-      <div className="flex justify-center">
-        <button
-          onClick={onEnd}
-          disabled={endLoading}
-          className="bg-red-600 text-white px-5 py-2 rounded w-full disabled:opacity-50"
-        >
-          {endLoading ? 'Ending...' : 'End Giveaway'}
-        </button>
-      </div>
-      {endError && <p className="text-red-600 text-sm">{endError}</p>}
-      {endMessage && !endError && <p className="text-green-700 text-sm">{endMessage}</p>}
+      <button
+        onClick={onEnd}
+        disabled={endLoading}
+        className="w-full bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      >
+        {endLoading ? 'Ending...' : 'End Giveaway & Select Winners'}
+      </button>
+      {endError && <div className="bg-red-50 border border-red-200 rounded p-3"><p className="text-red-700 text-sm">{endError}</p></div>}
+      {endMessage && !endError && <div className="bg-green-50 border border-green-200 rounded p-3"><p className="text-green-700 text-sm">{endMessage}</p></div>}
 
       {results && (
-        <div className="space-y-2">
-          <h3 className="font-medium">Results</h3>
+        <div className="space-y-4 pt-4 border-t border-gray-200">
+          <div className="text-center">
+            <h3 className="font-semibold text-lg text-gray-900">Giveaway Results</h3>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm font-semibold">Winners</p>
-              {results.winners.length === 0 ? <p className="text-xs">None</p> : (
-                <ul className="list-disc ml-5 text-sm">
-                  {results.winners.map(w => <li key={w}>{w}</li>)}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <p className="text-sm font-semibold text-gray-900 mb-2">🏆 Winners</p>
+              {results.winners.length === 0 ? (
+                <p className="text-sm text-gray-500">No winners selected</p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {results.winners.map((w, idx) => (
+                    <li key={w} className="bg-white rounded px-3 py-2 text-sm text-gray-800">
+                      {idx + 1}. {w}
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>
-            <div>
-              <p className="text-sm font-semibold">Substitutes</p>
-              {results.substitutes.length === 0 ? <p className="text-xs">None</p> : (
-                <ul className="list-disc ml-5 text-sm">
-                  {results.substitutes.map(s => <li key={s}>{s}</li>)}
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+              <p className="text-sm font-semibold text-gray-900 mb-2">⭐ Substitutes</p>
+              {results.substitutes.length === 0 ? (
+                <p className="text-sm text-gray-500">No substitutes selected</p>
+              ) : (
+                <ul className="space-y-1.5">
+                  {results.substitutes.map((s, idx) => (
+                    <li key={s} className="bg-white rounded px-3 py-2 text-sm text-gray-800">
+                      {idx + 1}. {s}
+                    </li>
+                  ))}
                 </ul>
               )}
             </div>

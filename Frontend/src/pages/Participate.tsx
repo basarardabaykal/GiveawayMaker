@@ -74,34 +74,43 @@ export function Participate() {
 
   return (
     <AppLayout title="Participate in Giveaway">
-      <div className="space-y-3">
-        <p className="text-sm">Giveaway ID: <span className="font-mono">{giveawayId}</span></p>
+      <div className="space-y-5">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
+          <p className="text-sm text-gray-600">Giveaway ID</p>
+          <p className="font-mono font-semibold text-gray-900">{giveawayId}</p>
+        </div>
         <form onSubmit={onSubmit} className="space-y-4">
-        <div className="flex flex-col gap-1">
-          <label className="text-sm">Full Name</label>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-gray-700">
+            Full Name
+          </label>
           <input
             type="text"
-            className="border rounded p-2"
+            className="w-full border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter your full name"
             value={fullName}
             onChange={e => setFullName(e.target.value)}
             required
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-sm">Phone Number</label>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-gray-700">
+            Phone Number
+          </label>
           <input
             type="tel"
-            className="border rounded p-2"
+            className="w-full border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            placeholder="Enter your phone number"
             value={phoneNumber}
             onChange={e => setPhoneNumber(e.target.value)}
             required
           />
         </div>
-        <button type="submit" disabled={loading} className="bg-green-600 text-white px-4 py-2 rounded w-full disabled:opacity-50">
+        <button type="submit" disabled={loading} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
           {loading ? 'Joining...' : 'Join Giveaway'}
         </button>
-        {error && <p className="text-red-600 text-sm">{error}</p>}
-        {message && !error && <p className="text-green-700 text-sm">{message}</p>}
+        {error && <div className="bg-red-50 border border-red-200 rounded p-3"><p className="text-red-700 text-sm">{error}</p></div>}
+        {message && !error && <div className="bg-green-50 border border-green-200 rounded p-3"><p className="text-green-700 text-sm">{message}</p></div>}
         </form>
       </div>
     </AppLayout>
