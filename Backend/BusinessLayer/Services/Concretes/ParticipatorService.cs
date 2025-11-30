@@ -29,7 +29,6 @@ namespace BusinessLayer.Services.Concretes
 
         public async Task<IDataResult<JoinGiveawayResponseDto>> JoinGiveaway(JoinGiveawayRequestDto requestDto)
         {
-            // Validation is handled automatically by FluentValidation via the MVC pipeline
 
             var giveaway = await _giveawayRepository.GetGiveawayById(requestDto.GiveawayId);
             if (giveaway == null)
