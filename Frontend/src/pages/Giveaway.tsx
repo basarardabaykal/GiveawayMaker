@@ -21,7 +21,7 @@ export function Giveaway() {
   }, []);
 
   return (
-    <AppLayout title={giveawayId ? 'Manage Giveaway' : 'Create a Giveaway'}>
+    <AppLayout title={giveawayId ? '' : 'Create a Giveaway'} wide={!!giveawayId}>
       <div className="space-y-6">
         {!giveawayId && (
           <CreateGiveawayForm
