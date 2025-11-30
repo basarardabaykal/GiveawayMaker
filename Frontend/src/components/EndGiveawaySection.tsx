@@ -49,7 +49,7 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
                 className="w-[440px] h-[440px]"
               />
             </a>
-            <div className="flex flex-col gap-4 w-full md:w-64 mt-8 md:mt-12">
+            <div className="flex flex-col gap-4 w-full md:w-64 mt-8 mt-16">
               <div className="text-center space-y-1">
                 <h2 className="font-semibold text-lg text-green-700">✓ Giveaway Ready</h2>
               </div>
@@ -60,8 +60,9 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
                     try { navigator.clipboard.writeText(participationUrl); setCopied(true); } catch {}
                   }}
                   className="group relative mx-auto flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-sm w-auto self-start"
+                  className="group relative mx-auto flex items-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-sm w-auto self-start"
                 >
-                  <span className="flex w-4 h-4 rounded bg-green-600 text-white items-center justify-center text-[9px] font-bold group-hover:scale-105 transition-transform">QR</span>
+                  <span className="flex w-5 h-5 rounded bg-green-600 text-white items-center justify-center text-[10px] font-bold group-hover:scale-105 transition-transform">QR</span>
                   <span>{copied ? 'Copied!' : 'Copy Link'}</span>
                 </button>
                 {copied && (
