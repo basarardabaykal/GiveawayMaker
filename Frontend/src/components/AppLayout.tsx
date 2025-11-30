@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export function AppLayout({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <header className="border-b border-gray-200 bg-white">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 select-none hover:opacity-80 transition-opacity">
@@ -17,7 +17,7 @@ export function AppLayout({ title, children }: { title: string; children: ReactN
           </nav>
         </div>
       </header>
-      <main className="flex-1 flex items-center justify-center py-12">
+      <main className="flex-1 flex items-center justify-center py-12 bg-gray-50">
         <div className="w-full max-w-2xl px-6">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
@@ -27,11 +27,6 @@ export function AppLayout({ title, children }: { title: string; children: ReactN
           </div>
         </div>
       </main>
-      <footer className="border-t border-gray-200 bg-white">
-        <div className="max-w-5xl mx-auto px-6 py-3 text-center">
-          <p className="text-xs text-gray-500">© 2025 GiveawayMaker</p>
-        </div>
-      </footer>
     </div>
   );
 }
