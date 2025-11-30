@@ -59,7 +59,6 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
                   onClick={() => {
                     try { navigator.clipboard.writeText(participationUrl); setCopied(true); } catch {}
                   }}
-                  className="group relative mx-auto flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-sm w-auto self-start"
                   className="group relative mx-auto flex items-center gap-2 rounded-md border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-sm w-auto self-start"
                 >
                   <span className="flex w-5 h-5 rounded bg-green-600 text-white items-center justify-center text-[10px] font-bold group-hover:scale-105 transition-transform">QR</span>
