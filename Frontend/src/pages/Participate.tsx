@@ -118,10 +118,6 @@ export function Participate() {
   return (
     <AppLayout title="Participate in Giveaway">
       <div className="space-y-5">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
-          <p className="text-sm text-gray-600">Giveaway ID</p>
-          <p className="font-mono font-semibold text-gray-900">{giveawayId}</p>
-        </div>
         <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">

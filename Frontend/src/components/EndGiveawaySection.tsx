@@ -29,7 +29,6 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
     <section className="space-y-5">
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h2 className="font-semibold text-base text-gray-900 mb-1">✓ Giveaway Ready</h2>
-          <p className="text-sm text-gray-600">ID: <span className="font-mono font-semibold">{giveawayId}</span></p>
         </div>
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
           <div className="flex flex-col items-center gap-4">
