@@ -36,7 +36,14 @@ export function Giveaway() {
         )}
 
         {giveawayId && participationUrl && (
-          <EndGiveawaySection giveawayId={giveawayId} participationUrl={participationUrl} />
+          <EndGiveawaySection
+            giveawayId={giveawayId}
+            participationUrl={participationUrl}
+            onReset={() => {
+              setGiveawayId(null);
+              setParticipationUrl(null);
+            }}
+          />
         )}
       </div>
     </AppLayout>

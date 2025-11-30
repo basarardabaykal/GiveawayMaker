@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import QRCode from 'react-qr-code';
 import { giveawayService } from '../services/giveawayService';
 
-export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayId: string; participationUrl: string }) {
+export function EndGiveawaySection({ giveawayId, participationUrl, onReset }: { giveawayId: string; participationUrl: string; onReset?: () => void }) {
   const [endLoading, setEndLoading] = useState(false);
   const [endError, setEndError] = useState<string | null>(null);
   const [endMessage, setEndMessage] = useState<string | null>(null);
@@ -78,8 +78,44 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
       >
         {endLoading ? 'Ending...' : 'End Giveaway & Select Winners'}
       </button>
-      {endError && <div className="bg-red-50 border border-red-200 rounded p-3"><p className="text-red-700 text-sm">{endError}</p></div>}
-      {endMessage && !endError && <div className="bg-green-50 border border-green-200 rounded p-3"><p className="text-green-700 text-sm">{endMessage}</p></div>}
+      {endError && (
+        <div className="bg-red-50 border border-red-200 rounded p-3 space-y-2">
+          <p className="text-red-700 text-sm">{endError}</p>
+          <button
+            type="button"
+            onClick={() => {
+              try { localStorage.removeItem('activeGiveaway'); } catch {}
+              if (onReset) onReset();
+            }}
+            className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors"
+          >
+            <span className="w-4 h-4 flex items-center justify-center rounded bg-gray-200 text-[10px] font-bold">↺</span>
+            <span>Start New Giveaway</span>
+          </button>
+        </div>
+      )}
+      {endMessage && !endError && (
+        <div className="bg-green-50 border border-green-200 rounded p-3">
+          {endMessage.toLowerCase().includes('not enough participant') ? (
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-green-700 text-sm flex-1">{endMessage}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  try { localStorage.removeItem('activeGiveaway'); } catch {}
+                  if (onReset) onReset();
+                }}
+                className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors"
+              >
+                <span className="w-4 h-4 flex items-center justify-center rounded bg-gray-200 text-[10px] font-bold">↺</span>
+                <span>Generate New Giveaway</span>
+              </button>
+            </div>
+          ) : (
+            <p className="text-green-700 text-sm">{endMessage}</p>
+          )}
+        </div>
+      )}
 
       {results && (
         <div className="space-y-4 pt-4 border-t border-gray-200">
