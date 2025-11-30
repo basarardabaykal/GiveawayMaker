@@ -11,6 +11,9 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
+using BusinessLayer.Validations;
+using FluentValidation;
 
 // Env
 DotNetEnv.Env.Load();
@@ -31,6 +34,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// FluentValidation: auto-validation and validator discovery
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<JoinGiveawayRequestDtoValidator>();
 
 // CORS
 var frontendUrl = builder.Configuration["FRONTEND_URL"];
