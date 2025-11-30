@@ -32,6 +32,7 @@ export function Participate() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [locked, setLocked] = useState<boolean>(false);
 
   useEffect(() => {
     fetch('https://api.ipify.org?format=json')
@@ -64,6 +65,9 @@ export function Participate() {
     });
     if (!result.success) {
       setError(result.message || 'Join failed');
+      if (result.statusCode === 400 && (result.message?.toLowerCase().includes('deactivated') || result.message?.toLowerCase().includes('not allowed'))) {
+        setLocked(true);
+      }
     } else {
       setMessage(result.message || 'Successfully joined');
       setFullName('');
@@ -91,6 +95,7 @@ export function Participate() {
             value={fullName}
             onChange={e => setFullName(e.target.value)}
             required
+            disabled={locked}
           />
         </div>
         <div className="space-y-1.5">
@@ -104,10 +109,11 @@ export function Participate() {
             value={phoneNumber}
             onChange={e => setPhoneNumber(e.target.value)}
             required
+            disabled={locked}
           />
         </div>
-        <button type="submit" disabled={loading} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-          {loading ? 'Joining...' : 'Join Giveaway'}
+        <button type="submit" disabled={loading || locked} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+          {locked ? 'Giveaway is deactivated' : (loading ? 'Joining...' : 'Join Giveaway')}
         </button>
         {error && <div className="bg-red-50 border border-red-200 rounded p-3"><p className="text-red-700 text-sm">{error}</p></div>}
         {message && !error && <div className="bg-green-50 border border-green-200 rounded p-3"><p className="text-green-700 text-sm">{message}</p></div>}
