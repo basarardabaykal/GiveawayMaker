@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import QRCode from 'react-qr-code';
 import { giveawayService } from '../services/giveawayService';
 
@@ -7,6 +7,13 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
   const [endError, setEndError] = useState<string | null>(null);
   const [endMessage, setEndMessage] = useState<string | null>(null);
   const [results, setResults] = useState<{ winners: string[]; substitutes: string[] } | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = setTimeout(() => setCopied(false), 1800);
+    return () => clearTimeout(t);
+  }, [copied]);
 
   async function onEnd() {
     setEndLoading(true);
@@ -42,20 +49,24 @@ export function EndGiveawaySection({ giveawayId, participationUrl }: { giveawayI
                 className="w-[400px] h-[400px]"
               />
             </a>
-            <div className="flex flex-col gap-5 w-full md:max-w-sm">
-              <div className="text-center md:text-left space-y-1">
+            <div className="flex flex-col gap-5 w-full md:max-w-sm mt-12">
+              <div className="text-center space-y-1">
                 <h2 className="font-semibold text-lg text-green-700">✓ Giveaway Ready</h2>
-                <p className="text-sm text-gray-600">Scan or share the join link.</p>
               </div>
-              <div className="bg-white rounded p-3 border border-gray-200 w-full flex items-center gap-3">
-                <p className="text-xs break-all text-gray-700 font-mono flex-1">{participationUrl}</p>
+              <div className="flex flex-col gap-2">
                 <button
                   type="button"
                   onClick={() => {
-                    try { navigator.clipboard.writeText(participationUrl); } catch {}
+                    try { navigator.clipboard.writeText(participationUrl); setCopied(true); } catch {}
                   }}
-                  className="text-xs px-2 py-1 rounded border border-gray-300 hover:bg-gray-100 active:bg-gray-200 transition-colors"
-                >Copy</button>
+                  className="group relative inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors shadow-sm"
+                >
+                  <span className="flex w-5 h-5 rounded bg-green-600 text-white items-center justify-center text-[10px] font-bold group-hover:scale-105 transition-transform">QR</span>
+                  <span>{copied ? 'Link Copied!' : 'Copy Join Link'}</span>
+                </button>
+                {copied && (
+                  <p className="text-[11px] text-green-600">Copied to clipboard</p>
+                )}
               </div>
             </div>
           </div>
