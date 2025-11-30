@@ -45,7 +45,7 @@ export function CreateGiveawayForm({ onCreated }: { onCreated: (info: { giveaway
             Giveaway Content
           </label>
           <textarea
-            className="w-full border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+            className="w-full h-12 border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
             value={form.content}
             onChange={e => update('content', e.target.value)}
             placeholder="Enter your giveaway description..."

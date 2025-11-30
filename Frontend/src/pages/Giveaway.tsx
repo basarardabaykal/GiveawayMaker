@@ -21,7 +21,7 @@ export function Giveaway() {
   }, []);
 
   return (
-    <AppLayout title={giveawayId ? '' : 'Create a Giveaway'}>
+    <AppLayout title={giveawayId ? '' : 'Create a Giveaway'} subtitle={giveawayId ? undefined : 'Simple and secure giveaways with QR codes.'}>
       <div className="space-y-6">
         {!giveawayId && (
           <CreateGiveawayForm
