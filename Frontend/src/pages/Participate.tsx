@@ -28,6 +28,7 @@ function getOrCreateFingerprint(): string {
 
 export function Participate() {
   const giveawayId = useMemo(() => getQueryGiveawayId(), []);
+  const fingerprint = useMemo(() => getOrCreateFingerprint(), []);
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [ipAddress, setIpAddress] = useState<string>('');
@@ -35,6 +36,7 @@ export function Participate() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [locked, setLocked] = useState<boolean>(false);
+  const [lockedReason, setLockedReason] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('https://api.ipify.org?format=json')
@@ -42,6 +44,18 @@ export function Participate() {
       .then(data => setIpAddress(data.ip))
       .catch(() => setIpAddress(''));
   }, []);
+
+  useEffect(() => {
+    if (!giveawayId) return;
+    try {
+      const key = `giveawayJoined:${giveawayId}:${fingerprint}`;
+      const val = localStorage.getItem(key);
+      if (val === 'true') {
+        setLocked(true);
+        setLockedReason('You have already joined this giveaway.');
+      }
+    } catch {}
+  }, [giveawayId, fingerprint]);
 
   if (!giveawayId) {
     return (
@@ -71,21 +85,32 @@ export function Participate() {
     const result = await participatorService.joinGiveaway({
       FullName: fullName,
       PhoneNumber: phoneNumber,
-      FingerPrintId: getOrCreateFingerprint(),
+      FingerPrintId: fingerprint,
       IpAddress: ipAddress || 'unknown',
       AuthProvider: 'local',
-      ProviderUserId: getOrCreateFingerprint(),
+      ProviderUserId: fingerprint,
       GiveawayId: giveawayId || "",
     });
     if (!result.success) {
       setError(result.message || 'Join failed');
       if (result.statusCode === 400 && (result.message?.toLowerCase().includes('deactivated') || result.message?.toLowerCase().includes('not allowed'))) {
         setLocked(true);
+        setLockedReason('Giveaway is deactivated.');
+      }
+      if (result.statusCode === 409 && (result.message?.toLowerCase().includes('already joined'))) {
+        setLocked(true);
+        setLockedReason('You have already joined this giveaway.');
       }
     } else {
       setMessage(result.message || 'Successfully joined');
       setFullName('');
       setPhoneNumber('');
+      try {
+        const key = `giveawayJoined:${giveawayId}:${fingerprint}`;
+        localStorage.setItem(key, 'true');
+        setLocked(true);
+        setLockedReason('You have already joined this giveaway.');
+      } catch {}
     }
     setLoading(false);
   }
@@ -128,7 +153,7 @@ export function Participate() {
           <p className="text-xs text-gray-500">Include country code. Example: 905061919083</p>
         </div>
         <button type="submit" disabled={loading || locked} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-          {locked ? 'Giveaway is deactivated' : (loading ? 'Joining...' : 'Join Giveaway')}
+          {locked ? (lockedReason || 'Joining disabled') : (loading ? 'Joining...' : 'Join Giveaway')}
         </button>
         {error && <div className="bg-red-50 border border-red-200 rounded p-3"><p className="text-red-700 text-sm">{error}</p></div>}
         {message && !error && <div className="bg-green-50 border border-green-200 rounded p-3"><p className="text-green-700 text-sm">{message}</p></div>}
