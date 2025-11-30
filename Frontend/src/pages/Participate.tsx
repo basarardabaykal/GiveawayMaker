@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { z } from 'zod';
 import { participatorService } from '../services/participatorService';
 import { AppLayout } from '../components/AppLayout';
+import { isValidInternationalPhone } from '../lib/phone';
 
 function getQueryGiveawayId(): string | null {
   try {
@@ -54,6 +56,18 @@ export function Participate() {
     setLoading(true);
     setError(null);
     setMessage(null);
+    const schema = z.object({
+      FullName: z.string().min(1, 'Full name is required'),
+      PhoneNumber: z.string().refine(isValidInternationalPhone, {
+        message: 'Enter a valid phone number including country code (e.g., 905061919083)',
+      }),
+    });
+    const parsed = schema.safeParse({ FullName: fullName, PhoneNumber: phoneNumber });
+    if (!parsed.success) {
+      setLoading(false);
+      setError(parsed.error.issues.map((issue) => issue.message).join(' '));
+      return;
+    }
     const result = await participatorService.joinGiveaway({
       FullName: fullName,
       PhoneNumber: phoneNumber,
@@ -111,6 +125,7 @@ export function Participate() {
             required
             disabled={locked}
           />
+          <p className="text-xs text-gray-500">Include country code. Example: 905061919083</p>
         </div>
         <button type="submit" disabled={loading || locked} className="w-full bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
           {locked ? 'Giveaway is deactivated' : (loading ? 'Joining...' : 'Join Giveaway')}

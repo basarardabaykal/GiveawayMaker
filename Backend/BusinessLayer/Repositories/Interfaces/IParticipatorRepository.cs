@@ -7,5 +7,6 @@ namespace BusinessLayer.Repositories.Interfaces
     public interface IParticipatorRepository
     {
         public Task<EntityEntry<Participator>> CreateParticipator(Participator participator);
+        public Task<bool> ExistsByPhone(Guid giveawayId, string normalizedPhone);
     }
 }

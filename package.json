@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "libphonenumber-js": "^1.12.29",
+    "zod": "^4.1.13"
+  }
+}
