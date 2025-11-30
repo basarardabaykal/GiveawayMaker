@@ -4,10 +4,10 @@ import Logo from '../assets/GiveawayMakerLogo.png';
 export function Navbar() {
   return (
     <header className="border-b border-gray-200 bg-white sticky top-0 w-full z-40">
-      <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 select-none hover:opacity-80 transition-opacity">
-          <img src={Logo} alt="GiveawayMaker Logo" className="h-10 w-auto drop-shadow-sm" />
-          <span className="font-semibold text-gray-900 text-lg">GiveawayMaker</span>
+          <img src={Logo} alt="GiveawayMaker Logo" className="h-9 sm:h-10 w-auto drop-shadow-sm" />
+          <span className="font-semibold text-gray-900 text-base sm:text-lg">GiveawayMaker</span>
         </Link>
         <nav className="text-sm">
           <a

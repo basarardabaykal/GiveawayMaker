@@ -34,22 +34,22 @@ export function EndGiveawaySection({ giveawayId, participationUrl, onReset }: { 
 
   return (
     <section className="space-y-5">
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-          <div className="flex flex-col md:flex-row items-start gap-10 md:gap-14">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 sm:p-6">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-14">
             <a
               href={participationUrl}
               target="_blank"
               rel="noreferrer"
               aria-label="Open participation link"
-              className="bg-white p-6 rounded-lg border border-gray-200 cursor-pointer hover:border-gray-300 transition-colors shadow-sm shrink-0"
+              className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200 cursor-pointer hover:border-gray-300 transition-colors shadow-sm w-full max-w-xs sm:max-w-sm md:max-w-[440px]"
             >
               <QRCode
                 value={participationUrl}
                 size={440}
-                className="w-[440px] h-[440px]"
+                className="w-full h-auto"
               />
             </a>
-            <div className="flex flex-col gap-4 w-full md:w-64 mt-8 mt-16">
+            <div className="flex flex-col gap-4 w-full md:w-64 mt-8 md:mt-16">
               <div className="text-center space-y-1">
                 <h2 className="font-semibold text-lg text-green-700">✓ Giveaway Ready</h2>
               </div>
