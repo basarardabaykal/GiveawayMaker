@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 export function AppLayout({ title, children }: { title: string; children: ReactNode }) {
