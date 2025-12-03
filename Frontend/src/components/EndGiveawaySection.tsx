@@ -28,6 +28,7 @@ export function EndGiveawaySection({ giveawayId, participationUrl, onReset }: { 
       if (result.message) setEndMessage(result.message);
       const data: any = result.data;
       setResults({ winners: (data.Winners ?? data.winners) || [], substitutes: (data.Substitutes ?? data.substitutes) || [] });
+      try { localStorage.removeItem('activeGiveaway'); } catch {}
     }
     setEndLoading(false);
   }
@@ -119,8 +120,19 @@ export function EndGiveawaySection({ giveawayId, participationUrl, onReset }: { 
 
       {results && (
         <div className="space-y-4 pt-4 border-t border-gray-200">
-          <div className="text-center">
+          <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg text-gray-900">Giveaway Results</h3>
+            <button
+              type="button"
+              onClick={() => {
+                try { localStorage.removeItem('activeGiveaway'); } catch {}
+                if (onReset) onReset();
+              }}
+              className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 transition-colors"
+            >
+              <span className="w-4 h-4 flex items-center justify-center rounded bg-gray-200 text-[10px] font-bold">↺</span>
+              <span>Generate New Giveaway</span>
+            </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
