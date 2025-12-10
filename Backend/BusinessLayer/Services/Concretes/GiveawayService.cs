@@ -76,8 +76,8 @@ namespace BusinessLayer.Services.Concretes
 
             var response = new EndGiveawayResponseDto
             {
-                Winners = selectedWinners.Select(p => p.FullName).ToArray(),
-                Substitutes = selectedSubstitutes.Select(p => p.FullName).ToArray()
+                Winners = selectedWinners.Select(p => $"{p.FullName} - {p.PhoneNumber}").ToArray(),
+                Substitutes = selectedSubstitutes.Select(p => $"{p.FullName} - {p.PhoneNumber}").ToArray()
             };
 
             return new SuccessDataResult<EndGiveawayResponseDto>("Giveaway ended successfully.", response);
