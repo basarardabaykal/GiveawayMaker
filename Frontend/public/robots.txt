@@ -1,0 +1,14 @@
+# GiveawayMaker - Robots.txt
+# https://giveawaymaker.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /participate
+
+# Static files
+Allow: /assets/
+
+# Sitemap
+Sitemap: https://giveawaymaker.com/sitemap.xml
